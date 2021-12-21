@@ -58,6 +58,7 @@ def get_circles_yolov5(path_to_images,
 
       # Inference
       pred = model(im, augment=augment, visualize=False)
+      print(model)
       t3 = time_sync()
       dt[1] += t3 - t2
 
