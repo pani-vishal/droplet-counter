@@ -75,9 +75,17 @@ Droplet classifier with options for VGG16, VGG19, and Resnet50 are provided.
 5. Label empty droplets as "Empty", droplets with bacteria as "Bacteria", and circles which are not droplets as "Not_Droplet".
 6. Import the label.csv.
 ### Training
-To train the classification models run [train_models.ipynb](./train_models.ipynb), until the Inference section.
+To train the classification models run [train_models.ipynb](./train_models.ipynb), until the Inference section. 
+
 ## GUI
-The GUI provides an intuitive way to do inference and annotate the images.
+The GUI provides an intuitive way to do inference and annotate the images. To run the GUI, type the following command:
+```
+python gui.py
+``` 
+
+```diff
+!Note: Ensure that the environment is activated before running any of the above commands
+``` 
 ### Annotated window
 ![](report/images/gui_annotated.png)
 ### Key bindings
