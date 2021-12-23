@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 import glob
 
-def hough_circle_detection(images_path, maxRadius = 300, minRadius=5, minDist=10, param1=300, param2=0.9, dp=1.5):
+def hough_circle_detection(images_path, maxRadius = 300, minRadius=5, minDist=10, param1=300, param2=0.9, dp=1.5, verbose=False):
 
 
     p = str(Path(images_path).resolve())
@@ -30,7 +30,8 @@ def hough_circle_detection(images_path, maxRadius = 300, minRadius=5, minDist=10
                                    dp=dp
                                    )
         list_circles.append(circles[0])
-    print(list_circles)
+    if verbose:
+        print(list_circles)
     return list_circles
 
 

@@ -2,9 +2,10 @@ import cv2
 import numpy as np
 import math
 
-def droplets_image_extractor(image, circle_detection_method, circle_detection_args = None, remove_background = True, border_circles_included = True):
+def droplets_image_extractor(path_image, image, circle_detection_method, circle_detection_args = None, 
+                             remove_background = True, border_circles_included = True, reshape_first=False):
 
-    circles = circle_detection_method(image, circle_detection_args)
+    circles = np.array(circle_detection_method(path_image, circle_detection_args))
 
     height, width = image.shape[:2]
 
@@ -21,9 +22,15 @@ def droplets_image_extractor(image, circle_detection_method, circle_detection_ar
 
         droplet = image[y_min:y_max, x_min:x_max]
 
-        if remove_background:
+        if remove_background and not reshape_first:
             mask = np.zeros_like(droplet)
             mask = cv2.circle(mask, (round(r), round(r)), round(r), (255,255,255), -1)
+            masked_droplet = cv2.bitwise_and(droplet, mask)
+            result.append(masked_droplet)
+        elif remove_background and reshape_first:
+            droplet = cv2.resize(droplet, (224,224))
+            mask = np.zeros_like(droplet)
+            mask = cv2.circle(mask, (112, 112), 112, (255,255,255), -1)
             masked_droplet = cv2.bitwise_and(droplet, mask)
             result.append(masked_droplet)
         else:
