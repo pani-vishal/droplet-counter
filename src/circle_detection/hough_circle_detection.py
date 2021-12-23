@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 import glob
 
-def hough_circle_detection(images_path, maxRadius = 300, minRadius=5, minDist=10, param1=300, param2=0.9, dp=1.5, verbose=False):
+def hough_circle_detection(images_path, maxRadius = 300, minRadius=5, minDist=10, param1=300, param2=0.9, dp=1.5):
 
 
     p = str(Path(images_path).resolve())
@@ -30,9 +30,37 @@ def hough_circle_detection(images_path, maxRadius = 300, minRadius=5, minDist=10
                                    dp=dp
                                    )
         list_circles.append(circles[0])
-    if verbose:
-        print(list_circles)
+    print(list_circles)
     return list_circles
+
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+def hough_circle_detection_simple(image, hough_args=None):
+    hough_args_default = {"maxRadius": 300,
+                          "minRadius": 5,
+                          "minDist": 10,
+                          "param1": 300,
+                          "param2": 0.9,
+                          "dp": 1.5,
+                          "method": cv2.HOUGH_GRADIENT_ALT
+                          }
+
+    if hough_args is None:
+        hough_args = hough_args_default
+    else:
+        hough_args = hough_args_default.update(hough_args)
+
+    circles = cv2.HoughCircles(image=image,
+                               **hough_args
+                               )
+
+    return circles
+
+
 
 
 class hough_circle_detection_gui_config:

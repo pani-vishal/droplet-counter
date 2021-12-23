@@ -59,17 +59,21 @@ class Droplet:
             listener.update_droplet()
 
 class DropletDatabase:
-    def __init__(self):
+    def __init__(self, listener):
         self.droplets = []
+        self.listener = listener
 
     def add_droplet(self, droplet):
         self.droplets.append(droplet)
+        self.listener.update_droplet()
 
     def delete_droplet(self, droplet):
         self.droplets.remove(droplet)
+        self.listener.update_droplet()
 
     def clear(self):
         self.droplets = []
+        self.listener.update_droplet()
 
     def export(self):
         export = ""
@@ -77,6 +81,11 @@ class DropletDatabase:
             x, y = droplet.get_position()
             export += f"{x}, {y}, {droplet.get_radius()}, {droplet.get_state()}\n"
         return export
+
+    def update_droplet(self):
+        self.listener.update_droplet()
+
+
 
 class DropletWidgetColorGenerator:
     @staticmethod
@@ -129,7 +138,7 @@ class DropletCircleWidget(QtWidgets.QGraphicsItem):
     def paint(self, painter, option, widget=None):
         painter.setBrush(QtGui.QBrush(QtCore.Qt.NoBrush))
         pen = QtGui.QPen(QtCore.Qt.SolidLine)
-        pen.setWidth(1)
+        pen.setWidth(3)
         pen.setColor(self.droplet_color_generator.get_color_from_state(self.droplet.get_state()))
         painter.setPen(pen)
         painter.drawEllipse(-int(self.droplet.get_radius()), -int(self.droplet.get_radius()),
@@ -173,6 +182,7 @@ class DropletCircleWidget(QtWidgets.QGraphicsItem):
             elif event.key() == QtCore.Qt.Key_3:
                 self.droplet.set_state("not_a_droplet")
                 event.accept()
+
         else:
             super().keyPressEvent(event)
 
@@ -195,6 +205,7 @@ class DropletCircleWidget(QtWidgets.QGraphicsItem):
                     -2 * self.droplet.get_radius(),
                     4 * self.droplet.get_radius(),
                     4 * self.droplet.get_radius())
+
 
 
 class DropletGraphicsView(QtWidgets.QGraphicsView):
@@ -237,7 +248,7 @@ class DropletWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.droplet_database = DropletDatabase()
+        self.droplet_database = DropletDatabase(self)
 
         # set window name
         self.setWindowTitle("Droplet classifier v0.1")
@@ -365,6 +376,13 @@ class DropletWindow(QtWidgets.QMainWindow):
         self.droplet_statistics_groupbox_layout = QtWidgets.QVBoxLayout()
         self.droplet_statistics_groupbox.setLayout(self.droplet_statistics_groupbox_layout)
 
+        self.droplet_statistics_num_of_full_droplets = QtWidgets.QLabel("Number of full droplets: 0")
+        self.droplet_statistics_num_of_empty_droplets = QtWidgets.QLabel("Number of empty droplets: 0")
+        self.droplet_statistics_num_of_not_a_droplets = QtWidgets.QLabel("Number of not a droplets: 0")
+
+        self.droplet_statistics_groupbox_layout.addWidget(self.droplet_statistics_num_of_full_droplets)
+        self.droplet_statistics_groupbox_layout.addWidget(self.droplet_statistics_num_of_empty_droplets)
+        self.droplet_statistics_groupbox_layout.addWidget(self.droplet_statistics_num_of_not_a_droplets)
 
         self.toolbox_layout.addWidget(self.droplet_statistics_groupbox)
 
@@ -429,6 +447,7 @@ class DropletWindow(QtWidgets.QMainWindow):
 
         self.droplet_scene.addItem(droplet_widget_new)
         self.droplet_database.add_droplet(new_droplet)
+        new_droplet.add_listener(self.droplet_database)
 
     def deleteDroplet(self):
         selected_items = self.droplet_scene.selectedItems()
@@ -469,6 +488,7 @@ class DropletWindow(QtWidgets.QMainWindow):
             self.droplet_scene.addItem(droplet_widget_new)
 
             self.droplet_database.add_droplet(new_droplet)
+            new_droplet.add_listener(self.droplet_database)
 
 
     def changeCircleDetectorConfigurator(self):
@@ -516,6 +536,13 @@ class DropletWindow(QtWidgets.QMainWindow):
             outfile.write(self.droplet_database.export())
             outfile.close()
 
+    def update_droplet(self):
+        droplets = self.droplet_database.droplets
+        states = [droplet.get_state() for droplet in droplets]
+
+        self.droplet_statistics_num_of_full_droplets.setText(f"Number of full droplets: {states.count('full')}")
+        self.droplet_statistics_num_of_empty_droplets.setText(f"Number of empty droplets: {states.count('empty')}")
+        self.droplet_statistics_num_of_not_a_droplets.setText(f"Number of not a droplets: {states.count('not_a_droplet')}")
 
 
 if __name__ == '__main__':
