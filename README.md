@@ -26,7 +26,7 @@ conda activate <env_name>
 [YOLOv5](https://github.com/ultralytics/yolov5) is used as the circle detector. To train the YOLO model, first we need to create a dataset in a format specific to YOLOv5.
 #### Managing the dataset
 
-1. The existing dataset can be found on this [link](https://drive.google.com/drive/folders/16Y5xFiwxop042F-vzUEGk-LMmsV9sEGf?usp=sharing). The next step can be skipped if the existing dataset is desired to be used.
+1. The existing dataset can be found on this [link](https://drive.google.com/drive/folders/1dhmL0kUXCenjLNVRh0BIINGWq-0MMAFO?usp=sharing). The next step can be skipped if the existing dataset is desired to be used.
 2. To create the dataset from scratch:
    1. Keep all the training images in _datasets/droplets/train/original_.
    2. Keep all the testing images in _datasets/droplets/test/original_.
@@ -44,7 +44,7 @@ conda activate <env_name>
       python detector_ds_extractor.py
       ``` 
 
-***Note: An example of the directory structure can be seen in the provided [Google Drive link](https://drive.google.com/drive/folders/16Y5xFiwxop042F-vzUEGk-LMmsV9sEGf?usp=sharing).***
+***Note: An example of the directory structure can be seen in the provided [Google Drive link](https://drive.google.com/drive/folders/1dhmL0kUXCenjLNVRh0BIINGWq-0MMAFO?usp=sharing).***
 
 
 #### Training
@@ -77,6 +77,7 @@ Droplet classifier with options for VGG16, VGG19, and Resnet50 are provided.
 ### Training
 To train the classification models run [train_models.ipynb](./train_models.ipynb), until the Inference section. 
 
+***Note: In the repository only a base VGG16 model is provided. It is adviced to first download the models folder from this [link](https://drive.google.com/drive/folders/1dhmL0kUXCenjLNVRh0BIINGWq-0MMAFO?usp=sharing) and replace the current `/models` folder.***
 ## GUI
 The GUI provides an intuitive way to do inference and annotate the images. To run the GUI, type the following command:
 ```
