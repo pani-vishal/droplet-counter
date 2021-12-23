@@ -88,11 +88,13 @@ The GUI provides an intuitive way to do inference and annotate the images.
 | `Numpad +/-` | Zoom In/Out of the image |
 | `R` | Remove selected circle |
 | `N` | Create a new circle |
-| `C` | Clear all circle ***With great power, comes great responsibities!!*** |
+| `C` | Clear all circle ***(With great power, comes great responsibities!!)*** |
 | `1` | Change class of selected droplet to _Bacteria_ |
 | `2` | Change class of selected droplet to _Empty_ |
 | `3` | Change class of selected droplet to _Not_Droplet_ |
 
+## Extra Remarks
+The baseline classifier using histogram analysis can be found and run from [baseline.ipynb](./ntbks/baseline.ipynb)
 ## External libraries and packages used
 1. [OpenCV](https://opencv.org/)
 2. [PyTorch](https://pytorch.org/)
