@@ -70,13 +70,28 @@ Droplet classifier with options for VGG16, VGG19, and Resnet50 are provided.
 ### Managing the dataset
 1. The existing dataset can be found on this [link](https://drive.google.com/drive/folders/16Y5xFiwxop042F-vzUEGk-LMmsV9sEGf?usp=sharing). The next step can be skipped if the existing dataset is desired to be used.
 2. Make appropriate folders as mentioned in ```input_folders``` and ```output_folders``` in [pd_data_extraction.ipynb](src/data_utils/pd_data_extraction.ipynb).
-3. Upload all of these images to a labeling site. In project an online platform [Label Studio](https://labelstud.io/) was used.
-4. Label empty droplets as "Empty", droplets with bacteria as "Bacteria", and circles which are not droplets as "Not_Droplet".
-5. Import the label.csv.
+3. Generate the required images by running [pd_data_extraction.ipynb](src/data_utils/pd_data_extraction.ipynb).
+4. Upload all of these images to a labeling site. In project an online platform [Label Studio](https://labelstud.io/) was used.
+5. Label empty droplets as "Empty", droplets with bacteria as "Bacteria", and circles which are not droplets as "Not_Droplet".
+6. Import the label.csv.
 ### Training
 To train the classification models run [train_models.ipynb](./train_models.ipynb), until the Inference section.
 ## GUI
+The GUI provides an intuitive way to do inference and annotate the images.
+### Annotated window
+![](report/images/gui_annotated.png)
 ### Key bindings
+| Command | Description |
+| --- | --- |
+| `Mouse Click + Drag` | When done on circles, it changes their location |
+| `Mouse Scroll Up/Down` | Increase/Decrease size of selected circle |
+| `Numpad +/-` | Zoom In/Out of the image |
+| `R` | Remove selected circle |
+| `N` | Create a new circle |
+| `C` | Clear all circle ***With great power, comes great responsibities!!*** |
+| `1` | Change class of selected droplet to _Bacteria_ |
+| `2` | Change class of selected droplet to _Empty_ |
+| `3` | Change class of selected droplet to _Not_Droplet_ |
 
 ## External libraries and packages used
 1. [OpenCV](https://opencv.org/)
