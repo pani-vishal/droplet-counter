@@ -26,7 +26,7 @@ conda activate <env_name>
 [YOLOv5](https://github.com/ultralytics/yolov5) is used as the circle detector. To train the YOLO model, first we need to create a dataset in a format specific to YOLOv5.
 #### Managing the dataset
 
-1. The existing dataset can be found on this link. The next step can be skipped if the existing dataset is desired to be used.
+1. The existing dataset can be found on this [link](https://drive.google.com/drive/folders/16Y5xFiwxop042F-vzUEGk-LMmsV9sEGf?usp=sharing). The next step can be skipped if the existing dataset is desired to be used.
 2. To create the dataset from scratch:
    1. Keep all the training images in _datasets/droplets/train/original_.
    2. Keep all the testing images in _datasets/droplets/test/original_.
@@ -44,7 +44,7 @@ conda activate <env_name>
       python detector_ds_extractor.py
       ``` 
 
-***Note: An example of the directory structure can be seen in the provided Google Drive link.***
+***Note: An example of the directory structure can be seen in the provided [Google Drive link](https://drive.google.com/drive/folders/16Y5xFiwxop042F-vzUEGk-LMmsV9sEGf?usp=sharing).***
 
 
 #### Training
@@ -66,13 +66,24 @@ python train.py --img 640 --batch 16 --epochs 3 --data ../configs/circle.yaml --
 
 
 ## Training the classifier
+Droplet classifier with options for VGG16, VGG19, and Resnet50 are provided.
 ### Managing the dataset
+1. The existing dataset can be found on this [link](https://drive.google.com/drive/folders/16Y5xFiwxop042F-vzUEGk-LMmsV9sEGf?usp=sharing). The next step can be skipped if the existing dataset is desired to be used.
+2. Make appropriate folders as mentioned in ```input_folders``` and ```output_folders``` in [pd_data_extraction.ipynb](src/data_utils/pd_data_extraction.ipynb).
+3. Upload all of these images to a labeling site. In project an online platform [Label Studio](https://labelstud.io/) was used.
+4. Label empty droplets as "Empty", droplets with bacteria as "Bacteria", and circles which are not droplets as "Not_Droplet".
+5. Import the label.csv.
 ### Training
-
+To train the classification models run [train_models.ipynb](./train_models.ipynb), until the Inference section.
 ## GUI
 ### Key bindings
 
-## Libraries and packages used
+## External libraries and packages used
+1. [OpenCV](https://opencv.org/)
+2. [PyTorch](https://pytorch.org/)
+3. [Tensorflow](https://www.tensorflow.org/)
+4. [Keras](https://keras.io/)
+5. [Scikit-Learn](https://scikit-learn.org/stable/)
 
 # Made with ❤️ by:
 
